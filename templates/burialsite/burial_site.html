@@ -1,0 +1,49 @@
+{% extends "burialsite/base.html" %}
+
+{% block login %}
+    {% if user.is_authenticated %}
+        <ul class = "admin">
+        <li><a href = "/admin/">Administrate</a></li>
+        <li><a href = "/logout/">Log out</a></li>
+        </ul>
+    {% else %}
+        <form action = "/login/" method = "POST">
+            {{ login_form }}
+            {% csrf_token %}
+            <input type="submit" value="Login" />
+        </form>
+    {% endif %}
+
+{% endblock %}
+
+{% block nav %}
+    {% if user.is_authenticated %}
+
+        <ul class = "navigation">
+            <li><a href = "/burialsite/">Burial sites</a></li>
+            <ul>
+                <li>{{ burial_site.name }}</li>
+            </ul>
+        </ul>
+
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        <p>Features within the burial site <strong>{{burial_site.name}}</strong></p>
+
+        {% if features|length > 0 %}
+            <ul>
+            {% for feature in features%}
+                <li><a href = "/burialsite/feature/{{burial_site.id}}/{{feature.id}}/">Feature {{feature.name}}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>None</p>
+        {% endif %}
+
+    {% endif %}
+
+{% endblock %}

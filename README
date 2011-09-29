@@ -1,0 +1,10 @@
+Django site for an ossuary database
+
+Bonelabdb is to be a simple inventory system for burial sites, with descriptive text and photo media to give clear information about the bones in a particular lab, museum, library or other location.
+
+The way to add bones is to add a Burial Site in the admin panel, then give it Features. Save and Continue Editing.
+Each Feature you gave should have a 'Full Record' link appended to it. Clicking this lets you edit which bones are at a Feature.
+
+After adding the fields in the Feature, Save and Continue as with the Burial Site, and you should get Full Record links for each bone. You have to use the links this way because Django does not currently support nested inline/stacked fields. 
+
+This itself is a basic CRUD system. It is public domain. 

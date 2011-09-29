@@ -1,0 +1,100 @@
+body {
+    font-family: arial, sans-serif;
+    background-color: #3874a8;
+    font-family: courier, monospace;
+}
+
+
+a:link {
+    color: #002;
+    text-decoration: underline;
+}
+a:visited {
+    color: #002;
+    text-decoration: underline;
+}
+a:hover {
+    color: #354654;
+    text-decoration: underline;
+}
+a:active {
+    color: #002;
+    text-decoration: underline;
+}
+
+#container {
+    width: 960px;
+    overflow: display;
+    clear: both;
+}
+
+#login {
+    padding: 0px;
+    margin: 0px;
+}
+
+#heading {
+    margin: 3px 0px 10px 0px;
+    padding: 0px;
+    width: 100%;
+    background-color: #3874a8;
+}
+
+#heading h1{
+    background-color: #fff;
+    color: #000;
+    text-align: right;
+    margin: 0px;
+    padding: 0px 10px 0px 0px;
+    width: 940px;
+}
+
+#navdiv {
+    width: 200px;
+    margin: 0px 10px 0px 0px;
+    padding: 10px;
+    float: left;
+    background: #fff;
+    min-height: 190px;
+}
+
+ul.admin {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+ul.admin li {
+    display: inline;
+}
+
+ul.navigation, ul.navigation ul {
+    width: 100%;
+    margin: 0px 0px 0px 5px;
+    padding: 0px;
+    list-style-type: none;
+}
+
+ul.navigation li, ul.navigation ul li {
+    width: 100%;
+    margin: 0px 0px 0px 5px;
+    padding: 0px;
+}
+
+#content {
+    width: 700px;
+    margin: 0px 0px 0px 0px;
+    padding: 10px;
+    float: left;
+    background-color: #fff;
+    min-height: 190px;
+}
+
+div.bone_record {
+    width: 690px;
+    margin: 3px 0px 8px 0px;
+    padding: 10px 0px 10px 10px;
+    overflow: visible;
+    
+    background-color: #fff;
+}

@@ -1,0 +1,365 @@
+{% extends "burialsite/base.html" %}
+
+{% block nav %}
+    {% if user.is_authenticated %}
+        <ul class = "navigation">
+            <li><a href = "/burialsite/">Burial sites</a></li>
+            <ul>
+                <li><a href = "/burialsite/{{burial_site.id}}/">{{burial_site.name}}</a></li>
+                <ul>
+                    <li><a href = "/burialsite/feature/{{burial_site.id}}/{{feature.id}}">{{ feature.name }}</a></li>
+                    <ul>
+                        <li>Skeleton {{ skeleton_id }}</li>
+                    </ul>
+                </ul>
+            </ul>
+        </ul>
+    {% endif %}
+{% endblock %}
+
+{% block login %}
+    {% if user.is_authenticated %}
+        <ul class = "admin">
+        <li><a href = "/admin/">Administrate</a></li>
+        <li><a href = "/logout/">Log out</a></li>
+        </ul>
+    {% else %}
+        <form action = "/login/" method = "POST">
+            {{ login_form }}
+            {% csrf_token %}
+            <input type="submit" value="Login" />
+        </form>
+    {% endif %}
+
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+
+        <p>Bone records for <strong>skeleton {{skeleton_id}}</strong></p>
+        <p>Burial Site: {{burial_site.name}}</p>
+        <p>Feature: {{feature.name}}</p>
+        <h2>Bones</h2>
+
+        {% for cranial_record in cranial_records%}
+            <div class = "bone_record">
+                <h3>[{{cranial_record.bone_side}}] {{cranial_record.bone_name}}</h3>
+                <p>Observed by <em>{{cranial_record.observer}}</em> on {{cranial_record.date}}</p>
+                <p>Age: {{cranial_record.age}}</p>
+                <p>Weight: {{cranial_record.weight}} kg</p>
+                <p>Sex: {{cranial_record.sex}}</p>
+                <p>Completeness: {{cranial_record.completeness}}</p>
+                <p>Present Location: {{cranial_record.present_location}}</p>
+
+                {% if cranial_pics|length > 0 %} 
+                    <h4>Images</h4>
+                    {%for pic in cranial_pics %}
+                        <p><img src = '{{pic.img.url}}'/></p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if cranial_taphs|length > 0 %} 
+                    <h4>Taphonomy</h4>
+                    {%for taph in cranial_taphs %}
+                        <p><strong>Alteration Type</strong> {{taph.alteration_type}}</p>
+                        <p><strong>Modification Location</strong> {{taph.modification_location}}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <h4>Notes</h4>
+                <p>{{cranial_record.notes}}</p>
+            </div>
+        {% endfor %}
+
+        {% for foot_record in foot_records%}
+            <div class = "bone_record">
+                <h3>[{{foot_record.bone_side}}] {{foot_record.bone_name}}</h3>
+                <p>Observed by <em>{{foot_record.observer}}</em> on {{foot_record.date}}</p>
+                <p>Age: {{foot_record.age}}</p>
+                <p>Weight: {{foot_record.weight}} kg</p>
+                <p>Sex: {{foot_record.sex}}</p>
+                <p>Completeness: {{foot_record.completeness}}</p>
+                <p>Present Location: {{foot_record.present_location}}</p>
+
+                {% if foot_pics|length > 0 %} 
+                    <h4>Images</h4>
+                    {%for pic in foot_pics %}
+                        <p><img src = '{{pic.img.url}}'/></p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if foot_taphs|length > 0 %} 
+                    <h4>Taphonomy</h4>
+                    {%for taph in foot_taphs %}
+                        <p><strong>Alteration Type</strong> {{taph.alteration_type}}</p>
+                        <p><strong>Modification Location</strong> {{taph.modification_location}}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <h4>Notes</h4>
+                <p>{{foot_record.notes}}</p>
+            </div>
+        {% endfor %}
+
+        {% for fragment_record in fragment_records%}
+            <div class = "bone_record">
+                <h3>[{{fragment_record.bone_side}}] {{fragment_record.bone_name}}</h3>
+                <p>Observed by <em>{{fragment_record.observer}}</em> on {{fragment_record.date}}</p>
+                <p>Age: {{fragment_record.age}}</p>
+                <p>Weight: {{fragment_record.weight}} kg</p>
+                <p>Sex: {{fragment_record.sex}}</p>
+                <p>Completeness: {{fragment_record.completeness}}</p>
+                <p>Count: {{fragment_record.count}}</p>
+                <p>Minimum # of Individuals: {{fragment_record.minimum_individuals}}</p>
+                <p>Present Location: {{fragment_record.present_location}}</p>
+
+                {% if fragment_pics|length > 0 %} 
+                    <h4>Images</h4>
+                    {%for pic in fragment_pics %}
+                        <p><img src = '{{pic.img.url}}'/></p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if fragment_taphs|length > 0 %} 
+                    <h4>Taphonomy</h4>
+                    {%for taph in fragment_taphs %}
+                        <p><strong>Alteration Type</strong> {{taph.alteration_type}}</p>
+                        <p><strong>Modification Location</strong> {{taph.modification_location}}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <h4>Notes</h4>
+                <p>{{fragment_record.notes}}</p>
+            </div>
+        {% endfor %}
+
+        {% for hand_record in hand_records%}
+            <div class = "bone_record">
+                <h3>[{{hand_record.bone_side}}] {{hand_record.bone_name}}</h3>
+                <p>Observed by <em>{{hand_record.observer}}</em> on {{hand_record.date}}</p>
+                <p>Age: {{hand_record.age}}</p>
+                <p>Weight: {{hand_record.weight}} kg</p>
+                <p>Sex: {{hand_record.sex}}</p>
+                <p>Completeness: {{hand_record.completeness}}</p>
+                <p>Present Location: {{hand_record.present_location}}</p>
+
+                {% if hand_pics|length > 0 %} 
+                    <h4>Images</h4>
+                    {%for pic in hand_pics %}
+                        <p><img src = '{{pic.img.url}}'/></p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if hand_taphs|length > 0 %} 
+                    <h4>Taphonomy</h4>
+                    {%for taph in hand_taphs %}
+                        <p><strong>Alteration Type</strong> {{taph.alteration_type}}</p>
+                        <p><strong>Modification Location</strong> {{taph.modification_location}}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <h4>Notes</h4>
+                <p>{{hand_record.notes}}</p>
+            </div>
+        {% endfor %}
+
+        {% for longbone_record in longbone_records%}
+            <div class = "bone_record">
+                <h3>[{{longbone_record.bone_side}}] {{longbone_record.bone_name}}</h3>
+                <p>Observed by <em>{{longbone_record.observer}}</em> on {{longbone_record.date}}</p>
+                <p>Age: {{longbone_record.age}}</p>
+                <p>Weight: {{longbone_record.weight}} kg</p>
+                <p>Sex: {{longbone_record.sex}}</p>
+                <p>Present Location: {{longbone_record.present_location}}</p>
+                <p>Proximal Epiphysis completeness: {{longbone_record.proximal_epiphysis_completeness}}</p>
+                <p>Proximal &#8531; completeness: {{longbone_record.proximal_one_third_completeness}}</p>
+                <p>Distal &#8531; completeness: {{longbone_record.distal_one_third_completeness}}</p>
+                <p>Distal epiphysis: {{longbone_record.distal_epiphysis_completeness}}</p>
+
+                {% if longbone_pics|length > 0 %} 
+                    <h4>Images</h4>
+                    {%for pic in longbone_pics %}
+                        <p><img src = '{{pic.img.url}}'/></p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if longbone_taphs|length > 0 %} 
+                    <h4>Taphonomy</h4>
+                    {%for taph in longbone_taphs %}
+                        <p><strong>Alteration Type</strong> {{taph.alteration_type}}</p>
+                        <p><strong>Modification Location</strong> {{taph.modification_location}}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <h4>Notes</h4>
+                <p>{{longbone_record.notes}}</p>
+            </div>
+        {% endfor %}
+
+        {% for postcranial_record in postcranial_records%}
+            <div class = "bone_record">
+                <h3>[{{postcranial_record.bone_side}}] {{postcranial_record.bone_name}}</h3>
+                <p>Observed by <em>{{postcranial_record.observer}}</em> on {{postcranial_record.date}}</p>
+                <p>Age: {{postcranial_record.age}}</p>
+                <p>Weight: {{postcranial_record.weight}} kg</p>
+                <p>Sex: {{postcranial_record.sex}}</p>
+                <p>Completeness: {{postcranial_record.completeness}}</p>
+                <p>Present Location: {{postcranial_record.present_location}}</p>
+
+                {% if postcranial_pics|length > 0 %} 
+                    <h4>Images</h4>
+                    {%for pic in postcranial_pics %}
+                        <p><img src = '{{pic.img.url}}'/></p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if postcranial_taphs|length > 0 %} 
+                    <h4>Taphonomy</h4>
+                    {%for taph in postcranial_taphs %}
+                        <p><strong>Alteration Type</strong> {{taph.alteration_type}}</p>
+                        <p><strong>Modification Location</strong> {{taph.modification_location}}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <h4>Notes</h4>
+                <p>{{postcranial_record.notes}}</p>
+            </div>
+        {% endfor %}
+
+        {% for rib_record in rib_records%}
+            <div class = "bone_record">
+                <h3>[{{rib_record.bone_side}}] {{rib_record.bone_name}}</h3>
+                <p>Observed by <em>{{rib_record.observer}}</em> on {{rib_record.date}}</p>
+                <p>Age: {{rib_record.age}}</p>
+                <p>Weight: {{rib_record.weight}} kg</p>
+                <p>Sex: {{rib_record.sex}}</p>
+                <p>Completeness: {{rib_record.completeness}}</p>
+                <p>Present Location: {{rib_record.present_location}}</p>
+
+                {% if rib_pics|length > 0 %} 
+                    <h4>Images</h4>
+                    {%for pic in rib_pics %}
+                        <p><img src = '{{pic.img.url}}'/></p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if rib_taphs|length > 0 %} 
+                    <h4>Taphonomy</h4>
+                    {%for taph in rib_taphs %}
+                        <p><strong>Alteration Type</strong> {{taph.alteration_type}}</p>
+                        <p><strong>Modification Location</strong> {{taph.modification_location}}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <h4>Notes</h4>
+                <p>{{rib_record.notes}}</p>
+            </div>
+        {% endfor %}
+
+        {% for sternum_record in sternum_records%}
+            <div class = "bone_record">
+                <h3>[{{sternum_record.bone_side}}] {{sternum_record.bone_name}}</h3>
+                <p>Observed by <em>{{sternum_record.observer}}</em> on {{sternum_record.date}}</p>
+                <p>Age: {{sternum_record.age}}</p>
+                <p>Weight: {{sternum_record.weight}} kg</p>
+                <p>Sex: {{sternum_record.sex}}</p>
+                <p>Present Location: {{sternum_record.present_location}}</p>
+                <p>Manubrium completeness {{sternum_record.manubrium_completeness}}</p> 
+                <p>Body completeness {{sternum_record.body_completeness}}</p>
+
+                {% if sternum_pics|length > 0 %} 
+                    <h4>Images</h4>
+                    {%for pic in sternum_pics %}
+                        <p><img src = '{{pic.img.url}}'/></p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if sternum_taphs|length > 0 %} 
+                    <h4>Taphonomy</h4>
+                    {%for taph in sternum_taphs %}
+                        <p><strong>Alteration Type</strong> {{taph.alteration_type}}</p>
+                        <p><strong>Modification Location</strong> {{taph.modification_location}}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <h4>Notes</h4>
+                <p>{{sternum_record.notes}}</p>
+            </div>
+        {% endfor %}
+
+        {% for tooth_record in tooth_records%}
+            <div class = "bone_record">
+                <h3>[{{tooth_record.bone_side}}] {{tooth_record.bone_name}}</h3>
+                <p>Observed by <em>{{tooth_record.observer}}</em> on {{tooth_record.date}}</p>
+                <p>Age: {{tooth_record.age}}</p>
+                <p>Weight: {{tooth_record.weight}} kg</p>
+                <p>Sex: {{tooth_record.sex}}</p>
+                <p>Present Location: {{tooth_record.present_location}}</p>
+                <p>Maturity: {{tooth_record.maturity}}</p>
+
+                <h4>Buccal Notes </h4>
+                <p>{{tooth_record.buccal_notes}}</p>
+
+                <h4>Occlusal Notes</h4>
+                <p>{{tooth_record.occlusal_notes}}</p>
+
+                <h4>Lingual Notes</h4>
+                <p>{{tooth_record.lingual_notes}}</p>
+
+                {% if tooth_pics|length > 0 %} 
+                    <h4>Images</h4>
+                    {%for pic in tooth_pics %}
+                        <p><img src = '{{pic.img.url}}'/></p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if tooth_taphs|length > 0 %} 
+                    <h4>Taphonomy</h4>
+                    {%for taph in tooth_taphs %}
+                        <p><strong>Alteration Type</strong> {{taph.alteration_type}}</p>
+                        <p><strong>Modification Location</strong> {{taph.modification_location}}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <h4>Notes</h4>
+                <p>{{tooth_record.notes}}</p>
+            </div>
+        {% endfor %}
+
+        {% for vertebra_record in vertebra_records%}
+            <div class = "bone_record">
+                <h3>[{{vertebra_record.bone_side}}] {{vertebra_record.bone_name}}</h3>
+                <p>Observed by <em>{{vertebra_record.observer}}</em> on {{vertebra_record.date}}</p>
+                <p>Age: {{vertebra_record.age}}</p>
+                <p>Weight: {{vertebra_record.weight}} kg</p>
+                <p>Sex: {{vertebra_record.sex}}</p>
+                <p>Present Location: {{vertebra_record.present_location}}</p>
+
+                <p>Centra Present: {{vertebra_record.centra_present}}</p>
+                <p>Neural Arches present: {{vertebra_record.neural_arches_present}}</p>
+                <p>Centrum Completeness: {{vertebra_record.centrum_completeness}}</p>
+                <p>Neural Arch Completeness: {{vertebra_record.neural_arch_completeness}}</p>
+
+                {% if vertebra_pics|length > 0 %} 
+                    <h4>Images</h4>
+                    {%for pic in vertebra_pics %}
+                        <p><img src = '{{pic.img.url}}'/></p>
+                    {% endfor %}
+                {% endif %}
+
+                {% if vertebra_taphs|length > 0 %} 
+                    <h4>Taphonomy</h4>
+                    {%for taph in vertebra_taphs %}
+                        <p><strong>Alteration Type</strong> {{taph.alteration_type}}</p>
+                        <p><strong>Modification Location</strong> {{taph.modification_location}}</p>
+                    {% endfor %}
+                {% endif %}
+
+                <h4>Notes</h4>
+                <p>{{vertebra_record.notes}}</p>
+            </div>
+        {% endfor %}
+    
+    {% endif %}
+
+{% endblock %}

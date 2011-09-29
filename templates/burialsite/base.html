@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link type = "text/css" rel = "stylesheet" href = "{{MEDIA_URL}}bonelab.css" />
+    <title>{% block title %}Burial site database{% endblock %}</title>
+</head>
+
+<body>
+    <div id = "container">
+
+        <div id = "login">
+            {% block login %}
+                <p>Login block</p>
+
+                {% if user.is_authenticated %}
+                    <p><a href = "/logout/">Log out</a></p>
+                {% else %}
+                {% endif %}
+
+            {% endblock %}
+        </div>
+
+        <div id = "heading">
+            {% block heading %}
+                <h1>Bone Lab Database</h1>
+            {% endblock %}
+        </div>
+
+        <div id = "navdiv">
+            {% block nav %}
+                {% if user.is_authenticated %}
+                    <ul class = "navigation">
+                        <li><a href = "/burialsite/">Burial sites</a></li>
+                    </ul>
+                {% endif %}
+            {% endblock %}
+        </div>
+
+
+        <div id = "content">
+            {% block content %}{% endblock %}
+        </div>
+    
+    </div>
+
+</body>
+</html>
+

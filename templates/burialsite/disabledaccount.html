@@ -1,0 +1,39 @@
+{% extends "burialsite/base.html" %}
+
+{% block login %}
+    {% if user.is_authenticated %}
+        <ul class = "admin">
+        <li><a href = "/admin/">Administrate</a></li>
+        <li><a href = "/logout/">Log out</a></li>
+        </ul>
+    {% else %}
+        <form action = "/login/" method = "POST">
+            {{ login_form }}
+            {% csrf_token %}
+            <input type="submit" value="Login" />
+        </form>
+    {% endif %}
+
+{% endblock %}
+
+{% block content %}
+
+    <p>Disabled account. Please contact ______</p>
+
+    {% if user.is_authenticated %}
+        <p>Burial Sites found:</p>
+
+        {% if burial_sites|length > 0 %}
+        <ul>
+            {% for burial_site in burial_sites %}
+                <p><a href = "/burialsite/{{burial_site.id}}">{{burial_site.name}}</a></p>
+            {% endfor %}
+        </ul>
+        {% else %}
+            <p>None</p>
+        {% endif %}
+
+    {% endif %}
+
+{% endblock %}
+
